@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar-color {
+    background-color: #1c2b36;
+}
+
+.sidebar-button {
+    background-color: #1c2b36;
+}
+
+.sidebar-button-hover:hover {
+    background-color: #16232d;
+}
+
+.sidebar-button-hover-2:hover {
+    background-color: #869fb1;
+}
+
+.textcolor-1 {
+    color: #869fb1;
+}
+
+.textcolor-2 {
+    color: #5f717e;
+}
+
+.textcolor-3 {
+    color: #1c2b36;
+    ;
+}
+
+.bgcolor-1 {
+    background-color: #869fb1;
+}
+
+.bgcolor-2 {
+    background-color: #16232d;
+}
+
+.bgcolor-3 {
+    background-color: #1c2b36;
+}
+
+.sidebar input::placeholder {
+    color: white;
+}
+
+.sidebar span,
+.sidebar i {
+    color: #869fb1;
+}
+
+.sidebar .submenu i {
+    color: white;
+}
+
+.sidebar .search i {
+    color: white;
+}
+
+.sidebar .sidebar-button-hover:hover span,
+.sidebar .sidebar-button-hover:hover i {
+    color: white !important;
+    transition: .3 ease-in-out !important;
+}
+
+.sidebar .sidebar-button-hover span,
+.sidebar .sidebar-button-hover i {
+    transition: .3 ease-in-out !important;
+}
+
+.dropdown.active {
+    background-color: #16232d;
+    color: white;
+}
+
+.dropdown.active i,
+.dropdown.active span {
+    color: white;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+}
+
+.rotate-0 {
+    transform: rotate(0deg);
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+}
+
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* For IE, Edge and Firefox */
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.data-overview {
+    margin-left: 250px;
+}
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    background-color: #1c2b36;
+}
+
+#loading-center {
+    /* display: none; */
+    /* center 50%  */
+    width: 30%;
+    height: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(https://cdn.discordapp.com/attachments/1021413861552828466/1025313412869259284/removal.ai_edf5bed7-5483-4b32-aa6f-cc6da03ce279.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+.sidebar .dropdown:hover i.animated-icon,
+.sidebar .button:hover i.animated-icon,
+.sidebar .submenu a:hover i.animated-icon,
+.top-menu a:hover i.animated-icon {
+    animation-name: shake;
+    animation-duration: 0.5s;
+}
+
+.sidebar .dropdown:hover.active i.animated-icon,
+.sidebar .button:hover.active i.animated-icon {
+    animation-name: none;
+}
+
+
+/* Define the shake animation */
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(10deg);
+    }
+    40% {
+        transform: rotate(-10deg);
+    }
+    60% {
+        transform: rotate(10deg);
+    }
+    80% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+ ::-webkit-scrollbar {
+    width: 10px;
+}
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #1c2b36;
+    transition: .3s ease-in-out;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+caption {
+    text-align: left;
+    color: #869fb1;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+th {
+    color: #1c2b36;
+    font-weight: 500;
+}
+
+.alert .new-animation {
+    animation: new-animation 1s ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 3s;
+    animation-fill-mode: both;
+}
+
+@keyframes new-animation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+a:hover .alert .fa-chevron-right {
+    transform: translateX(5px);
+    transition: transform .3s ease-in-out, padding .3s ease-in-out;
+    padding-right: 15px;
+}
+
+a:hover .alert .fa-chevron-left {
+    transform: translateX(-5px);
+    transition: transform .3s ease-in-out, padding .3s ease-in-out;
+    padding-left: 15px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 1px solid #dee2e6;
+}
