@@ -1,6 +1,6 @@
 <?php
 
-$main_url = "http://localhost/Console-Kobyskreaties-V2/";
+$main_url = "http://localhost/projecten/Console-Kobyskreaties-V2/";
 
 function getDB() {
     $host = "localhost";
@@ -51,7 +51,6 @@ function getFromDB($what = "*", $table = "users", $where = "1", $limit = "", $or
     }
 }
 
-
 // delete function
 function deleteFromDB($table, $where){
     try {
@@ -75,11 +74,7 @@ function console_log($data) {
     echo '</script>';
 }
 
-
-
-
 // Order functions
-
 function getOrders($limit = "", $sort_by = "created_at", $sort_order = "DESC") {
     $orders = getFromDB("*", "orders", "1", $limit, "$sort_by $sort_order");
     return $orders;
@@ -116,6 +111,28 @@ function deleteOrder($id) {
     deleteFromDB("orders", "id = $id");
 }
 
+function getProductsFromOrder($id) {
+    $products = getFromDB("*", "order_products", "order_id = $id");
+    return $products;
+}
+
+function printgetOrderStatus($id) {
+    // Get the order status
+    // show in  orange if "	Processing Payment"
+    // show in  red if "	Processing Order"
+
+    $order = getOrder($id);
+    $status = $order[0]['status'];
+
+    if ($status == "Processing Payment") {
+        echo '<span class="badge text_orange">' . $status . '</span>';
+    } else if ($status == "Processing Order") {
+        echo '<span class="badge badge-danger">' . $status . '</span>';
+    } else {
+        echo '<span class="badge badge-success">' . $status . '</span>';
+    }
+}
+
 // Customer functions
 
 function getCustomers() {
@@ -141,38 +158,57 @@ function getOrdertotal($id) {
 
 // Product functions
 
-function getProducts($limit = "", $sort_by = "date_created", $sort_order = "DESC") {
-    $products = getFromDB("*", "products", "1", $limit, "$sort_by $sort_order");
-    return $products;
-}
+function getProducts() {
+    // try 
 
-function getProduct($id) {
-    $product = getFromDB("*", "products", "id = $id");
+    $db = getDB();
+    $sql = 'SELECT 
+    PG.id AS "id",
+    PG.title AS "product_title",
+    br.title AS "product_brand",
+    ca.title as "product_categorie",
+    PG.banner AS "product_banner"
+    
+    FROM product_groups PG
+        LEFT JOIN brands br ON PG.brand = br.id
+        LEFT JOIN categories ca ON PG.category = ca.id';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     return $product;
 }
 
-function getProductsFromOrder($id) {
-    $products = getFromDB("*", "order_products", "order_id = $id");
-    return $products;
+
+function getProductsAmount() {
+    $db = getDB();
+    $sql = "SELECT * FROM products";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
 }
 
-function printgetOrderStatus($id) {
-    // Get the order status
-    // show in  orange if "	Processing Payment"
-    // show in  red if "	Processing Order"
+function getProduct($id) {
+    $db = getDB();
+    $sql = 'SELECT 
+    PG.id AS "id",
+    PG.title AS "product_title",
+    br.title AS "product_brand",
+    ca.title as "product_categorie",
+    PG.banner AS "product_banner",
+    PG.created_at AS "created_at"
+    
+    FROM product_groups PG
+        LEFT JOIN brands br ON PG.brand = br.id
+        LEFT JOIN categories ca ON PG.category = ca.id WHERE PG.id = :id';
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $order = getOrder($id);
-    $status = $order[0]['status'];
-
-    if ($status == "Processing Payment") {
-        echo '<span class="badge text_orange">' . $status . '</span>';
-    } else if ($status == "Processing Order") {
-        echo '<span class="badge badge-danger">' . $status . '</span>';
-    } else {
-        echo '<span class="badge badge-success">' . $status . '</span>';
-    }
+    return $product;
 }
-
 
 // Delivery costs
 
@@ -205,8 +241,53 @@ function getbrands() {
     return $subcategories;
 }
 
+// stock 
+
+function getStock(){
+    $db = getDB();
+    $sql = 'SELECT stock.*, products.* FROM stock
+    LEFT JOIN products ON stock.product_group_id = products.product_group AND stock.color = products.color AND stock.size = products.size';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $stock = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $stock;
+}
+
+
+// get sizes
+function getSizes() {
+    $sizes = getFromDB("*", "sizes", "1");
+    return $sizes;
+}
+
+
+// get
+
 
 // Extra functions
+
+function getColorTitle($id) {
+    $colors = getColors();
+    foreach ($colors as $color) {
+        if ($color['id'] == $id) {
+            return $color['title'];
+        }
+    }
+}
+
+// get size title
+function getSizeTitle($id) {
+    $sizes = getSizes();
+    foreach ($sizes as $size) {
+        if ($size['id'] == $id) {
+            return $size['title'];
+        }
+    }
+}
+
+
+
 
 function getTotalPrice() {
     try {

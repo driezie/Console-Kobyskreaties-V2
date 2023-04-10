@@ -74,7 +74,7 @@
             <div class="row-span-2">
                 <div class="py-3 px-3 bg-white shadow-md rounded-md card">
                     <p class="text-sm font-medium text-gray-500">Aantal producten</p>
-                    <p class="amount-animate text-3xl font-medium" data-label="<?= count(getProducts()) ?>"></p>
+                    <p class="amount-animate text-3xl font-medium" data-label="<?= count(getProductsAmount()) ?>"></p>
                 </div>
             </div>
         </div>
