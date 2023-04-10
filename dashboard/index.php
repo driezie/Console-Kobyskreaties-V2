@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<?php $main_url = "http://localhost/projecten/Console-Kobyskreaties-V2/";?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="<?=$main_url?>includes/css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8">
@@ -57,7 +55,7 @@
             <div class="row-span-2">
                 <div class="py-3 px-3 bg-white shadow-md rounded-md card">
                 <p class="text-sm font-medium text-gray-500">Omzet</p>
-                    <p class="euro-animation text-3xl font-medium" data-label="<?= getTotalPrice() ?>">€<?= getTotalPrice() ?></p>
+                    <p class="euro-animation text-3xl font-medium" data-label="<?= getTotalPrice() ?>"><?= formatPrice(getTotalPrice()) ?></p>
                     <?= console_log(getTotalPrice()) ?>
                 </div>
             </div>
@@ -104,9 +102,9 @@
                                 ?>
                                 <tr>
                                     <td><a href="<?=$main_url?>dashboard/orders/order/?id=<?= $order['id'] ?>" class="text-blue-500 hover:text-blue-600"><?= $order['id'] ?></a></td>
-                                    <td><?= $customer['first_name'] . ' ' . $customer['last_name'] ?></td>
+                                    <td><a href="<?= $main_url ?>dashboard/customers/customer/?id=<?= $customer['id'] ?>" class="text-blue-500 hover:text-blue-600"><?= $customer['first_name'] . ' ' . $customer['last_name'] ?></a>
                                     <td><?= convertDate($order['created_at']) ?></td>
-                                    <td>€<?= getOrderTotalPrice($order['id']) ?></td>
+                                    <td><?= printGetOrderTotalPrice($order['id']) ?></td>
                                     <td><a href="<?=$main_url?>dashboard/orders/order/?id=<?= $order['id'] ?>" class="text-blue-500 hover:text-blue-700">Bekijken</a></td>
                                 </tr>
                             <?php } ?>   

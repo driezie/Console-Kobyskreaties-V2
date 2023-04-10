@@ -1,4 +1,7 @@
 <?php
+
+$main_url = "http://localhost/Console-Kobyskreaties-V2/";
+
 function getDB() {
     $host = "localhost";
     $dbname = "kobyskreaties";
@@ -98,9 +101,7 @@ function getOrderTotalPrice($id) {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // make the $result['total']; with a comma and 2 decimals
-        $total = number_format($result['total'], 2, ',', '.');
-        return $total;
+        return $result['total'];
     } catch (PDOException $e) {
         echo 'Database gegevens ophalen error: ' . $e->getMessage();
     }
@@ -132,6 +133,11 @@ function getCustomerFromOrder($id) {
     return $customer;
 }
 
+function getOrdertotal($id) {
+    $total = getOrderTotalPrice($id) + getHigestDeliveryCost($id);
+    return $total;
+}
+
 
 // Product functions
 
@@ -150,8 +156,54 @@ function getProductsFromOrder($id) {
     return $products;
 }
 
+function printgetOrderStatus($id) {
+    // Get the order status
+    // show in  orange if "	Processing Payment"
+    // show in  red if "	Processing Order"
+
+    $order = getOrder($id);
+    $status = $order[0]['status'];
+
+    if ($status == "Processing Payment") {
+        echo '<span class="badge text_orange">' . $status . '</span>';
+    } else if ($status == "Processing Order") {
+        echo '<span class="badge badge-danger">' . $status . '</span>';
+    } else {
+        echo '<span class="badge badge-success">' . $status . '</span>';
+    }
+}
 
 
+// Delivery costs
+
+function getDeliveryCosts() {
+    $delivery_costs = getFromDB("*", "delivery_costs", "1");
+    return $delivery_costs;
+}
+
+
+// Colors
+
+function getColors() {
+    $colors = getFromDB("*", "colors", "1");
+    return $colors;
+}
+
+
+// Categories
+
+function getCategories() {
+    $categories = getFromDB("*", "categories", "1");
+    return $categories;
+}
+
+
+// brands
+
+function getbrands() {
+    $subcategories = getFromDB("*", "brands", "1");
+    return $subcategories;
+}
 
 
 // Extra functions
@@ -167,20 +219,52 @@ function getTotalPrice() {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // make the $result['total']; with a comma and 2 decimals
-        $total = number_format($result['total'], 2, ',', '.');
-        return $total;
+        return $result['total'];
     } catch (PDOException $e) {
         echo 'Database gegevens ophalen error: ' . $e->getMessage();
     }
 }
 
 function convertDate($date) {
-    // convert naar dag maan_naam jaar in nederlands
     $date = date("d F Y", strtotime($date));
     return $date;
 }
 
+function getHigestDeliveryCost($orderid) {
+    $total = getOrderTotalPrice($orderid);
+    if ($total > 30) {
+        return 0;
+    } else {
+        $products = getProductsFromOrder($orderid);
+
+        $highest_delivery_cost = 0;
+        foreach ($products as $product) {
+            if ($product['product_delivery_cost'] > $highest_delivery_cost) {
+                $highest_delivery_cost = $product['product_delivery_cost'];
+            }
+        }
+        return $highest_delivery_cost;
+    }
+}
+
+function printGetHigestDeliveryCost($orderid) {
+    $delivery_cost = getHigestDeliveryCost($orderid);
+    if ($delivery_cost == 0) {
+        echo "Gratis";
+    } else {
+        echo "€" . formatPrice($delivery_cost);
+    }
+}
+
+function printGetOrderTotalPrice($orderid) {
+    // formatPrice(getOrderTotalPrice($order[0]['id']) + getHigestDeliveryCost($order[0]['id']))
+    echo "€" . formatPrice(getOrderTotalPrice($orderid) + getHigestDeliveryCost($orderid));
+}
+
+function formatPrice($price) {
+    $price = number_format($price, 2, ',', '.');
+    return $price;
+}
 
 
 

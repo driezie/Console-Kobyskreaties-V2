@@ -82,6 +82,11 @@
                         Categorieën
                     </h1>
                 </a>
+                <a href="<?=$main_url?>dashboard/subcategories">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1">
+                        Subcategorieën
+                    </h1>
+                </a>
                 <a href="<?=$main_url?>dashboard/colors">
                     <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1">
                         Kleuren
