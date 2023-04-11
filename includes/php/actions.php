@@ -13,6 +13,8 @@ function getDB() {
     return $dbh;
 }
 
+
+
 // Main function
 
 // get function

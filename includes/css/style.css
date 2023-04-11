@@ -296,3 +296,9 @@ input[type=checkbox]:checked:after {
     top: 2px;
     left: 6px;
 }
+
+.link-transition {
+    transition-property: color, background-color;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}

@@ -107,3 +107,47 @@ document.addEventListener('click', function(event) {
         hideProfilePopup();
     }
 });
+// Function to validate links and change class for invalid links
+function validateLinks() {
+    // Get all <a> tags within the table with id "tableBody"
+    var table = document.getElementById("tableBody");
+    var links = table.getElementsByTagName("a");
+
+    // Loop through each <a> tag
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        var href = link.getAttribute("href");
+        console.log("Validating link:", href);
+
+        // Wrap the callback function in a closure to capture the correct value of the "link" variable
+        (function(link) {
+            // Send a HEAD request to the link to check if it's valid
+            fetch(href, { method: "HEAD" })
+                .then(function(response) {
+                    // Check the response status code
+                    if (!response.ok) {
+                        console.error("Invalid link:", href);
+                        // Update the class of the link to display red text color, hover effect, and transition animation
+                        link.classList.remove("text-blue-500", "hover:text-blue-700");
+                        link.classList.add("text-red-500", "hover:text-red-700", "link-transition");
+
+                        // Add an icon in front of the link
+                        var icon = document.createElement("i");
+                        icon.classList.add("fas", "fa-exclamation-triangle", "mr-1");
+                        link.insertBefore(icon, link.firstChild);
+                    }
+                })
+                .catch(function(error) {
+                    console.error("Failed to fetch link:", error);
+                });
+        })(link);
+    }
+}
+
+// Call the function after the window is loaded
+window.addEventListener("load", function() {
+    // Delay the validation to ensure that the table is fully loaded
+    setTimeout(function() {
+        validateLinks();
+    }, 1000);
+});
