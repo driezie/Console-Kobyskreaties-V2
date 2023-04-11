@@ -107,15 +107,23 @@ document.addEventListener('click', function(event) {
         hideProfilePopup();
     }
 });
+
+
+
 // Function to validate links and change class for invalid links
 function validateLinks() {
-    // Get all <a> tags within the table with id "tableBody"
-    var table = document.getElementById("tableBody");
-    var links = table.getElementsByTagName("a");
+    // Get all <a> tags on the page
+    var links = document.getElementsByTagName("a");
 
     // Loop through each <a> tag
     for (var i = 0; i < links.length; i++) {
         var link = links[i];
+
+        // Skip links within the class "sidebar"
+        if (link.closest('.sidebar')) {
+            continue;
+        }
+
         var href = link.getAttribute("href");
         console.log("Validating link:", href);
 
@@ -129,7 +137,7 @@ function validateLinks() {
                         console.error("Invalid link:", href);
                         // Update the class of the link to display red text color, hover effect, and transition animation
                         link.classList.remove("text-blue-500", "hover:text-blue-700");
-                        link.classList.add("text-red-500", "hover:text-red-700", "link-transition");
+                        link.classList.add("text-red-500", "hover:text-red-600", "link-transition");
 
                         // Add an icon in front of the link
                         var icon = document.createElement("i");
@@ -146,7 +154,7 @@ function validateLinks() {
 
 // Call the function after the window is loaded
 window.addEventListener("load", function() {
-    // Delay the validation to ensure that the table is fully loaded
+    // Delay the validation to ensure that the page is fully loaded
     setTimeout(function() {
         validateLinks();
     }, 1000);
