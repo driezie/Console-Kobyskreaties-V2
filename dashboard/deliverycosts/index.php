@@ -27,33 +27,38 @@
             <?php include_once '../../includes/php/createNavbar.php'; ?>
 
             <!-- Header -->
-            <div class="p-5" style="background-image: url(https://console.kobyskreaties.nl/dashboard/images/products/banner2.png); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-                <nav class="flex items-center text-gray-400 text-sm my-3">
-                    <a href="<?= $main_url ?>dashboard/" class="hover:text-gray-300">Dashboard</a>
-                    <span class="mx-2 select-none">/</span>
-                    <a href="" class="text-white hover:text-gray-300">Bezorgingskosten</a>
-                </nav>
-
-                <h2 class="text-4xl font-medium text-white">Welkom terug, Jelte Cost 🙌✨</h2>
-                <p class="my-4 text-md text-gray-300 w-1/1 lg:w-1/2">
-                    Hieronder vind je een overzicht van alle bezorgingskosten.
-                </p>
-            </div>
+            <?php
+            $bannerArray = array(
+                'subtitle' => 'Hieronder vind je een overzicht van alle bezorgingskosten.',
+                'image' => 'https://console.kobyskreaties.nl/dashboard/images/products/banner2.png',
+                'breadcrumb' => array(
+                    array('title' => 'Dashboard', 'url' => 'dashboard'),
+                    array('title' => 'Bezorgingskosten'),
+                )
+            );
+                        
+            $bannerHTML = createBanner($bannerArray, $main_title, $main_url);
+            echo $bannerHTML;
+            ?>
 
             <!-- Content -->
-            <div class="p-3 pt-6">
-                <h2 class="text-2xl font-medium textcolor-3">Bezorgingskosten</h2>
+            <div class="p-3 pt-6 flex justify-between items-center">
+                <div class="flex items-left flex-col">
+                    <h2 class="text-2xl font-medium textcolor-3">
+                        Bezorgingskosten
+                    </h2>
+                </div>
+                <div class="flex">
+                    <a href="<?= $main_url ?>dashboard/deliverycosts/new.php" class="btn btn-primary bgcolor-3 text-white hover:bgcolor-2 p-2 rounded-md"><i class="fa-solid fa-plus pr-2"></i></i>Nieuwe bezorgingskost</a>
+                </div>
             </div>
 
             <div class="grid grid-rows-3 grid-flow-col gap-4">
                 <div class="row-span-3 m-2">
                     <div class="py-3 px-3 bg-white shadow-md rounded-md card">
-                        <input type="text" class="block w-full p-2 text-sm text-gray-900 border rounded-lg" placeholder="Zoeken door alle bezorgingskosten..." id="searchInput">
+                        <?= createSearch("Zoeken naar bezorgingskosten") ?>
                         <table class="table-auto w-full" id="tableBody">
-                            <caption class="text-sm italic px-2 py-2">
-                                Aantal items: <span class="text-gray-500" id="itemCount"></span>
-                            </caption>
+                            <?= showItemsFilter() ?>
                             <thead class="border-b border-gray-200">
                                 <tr>
                                     <th>Id</th>

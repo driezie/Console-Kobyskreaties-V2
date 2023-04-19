@@ -1,4 +1,4 @@
-console.log("main.js");
+// console.log("main.js");
 
 // Get all dropdown buttons
 const dropdownButtons = document.querySelectorAll(".dropdown");
@@ -42,7 +42,7 @@ document.addEventListener("click", (event) => {
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 (function(jQuery) {
     setTimeout(function() {
-        console.log('loaded');
+        // console.log('loaded');
 
         "use strict";
 
@@ -125,7 +125,7 @@ function validateLinks() {
         }
 
         var href = link.getAttribute("href");
-        console.log("Validating link:", href);
+        // console.log("Validating link:", href);
 
         // Wrap the callback function in a closure to capture the correct value of the "link" variable
         (function(link) {
@@ -146,16 +146,14 @@ function validateLinks() {
                     }
                 })
                 .catch(function(error) {
-                    console.error("Failed to fetch link:", error);
+                    console.error("Failed to fetch link:", "\n", href, "\n\n", error);
                 });
         })(link);
     }
 }
 
-// Call the function after the window is loaded
-window.addEventListener("load", function() {
-    // Delay the validation to ensure that the page is fully loaded
-    setTimeout(function() {
-        validateLinks();
-    }, 1000);
-});
+// window.addEventListener("load", function() {
+//     setTimeout(function() {
+//         validateLinks();
+//     }, 1000);
+// });

@@ -35,7 +35,6 @@
 
 .textcolor-3 {
     color: #1c2b36;
-    ;
 }
 
 .bgcolor-1 {
@@ -48,6 +47,10 @@
 
 .bgcolor-3 {
     background-color: #1c2b36;
+}
+
+.bgcolor-3:hover {
+    background-color: #16232d;
 }
 
 .sidebar input::placeholder {
@@ -228,14 +231,8 @@ th {
 }
 
 @keyframes new-animation {
-    0% {
-        transform: translateY(0);
-    }
     50% {
         transform: translateY(-5px);
-    }
-    100% {
-        transform: translateY(0);
     }
 }
 

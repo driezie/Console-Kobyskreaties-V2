@@ -1,4 +1,4 @@
-console.log("loadFontAwesome.js");
+// console.log("loadFontAwesome.js");
 
 window.FontAwesomeKitConfig = { "asyncLoading": { "enabled": false }, "autoA11y": { "enabled": true }, "baseUrl": "https://ka-f.fontawesome.com", "baseUrlKit": "https://kit.fontawesome.com", "detectConflictsUntil": null, "iconUploads": {}, "id": 102377797, "license": "free", "method": "css", "minify": { "enabled": true }, "token": "b1b2df5e00", "v4FontFaceShim": { "enabled": true }, "v4shim": { "enabled": true }, "v5FontFaceShim": { "enabled": true }, "version": "6.4.0" };
 ! function(t) { "function" == typeof define && define.amd ? define("kit-loader", t) : t() }((function() {

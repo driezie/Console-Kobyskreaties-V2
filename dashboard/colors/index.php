@@ -27,20 +27,22 @@
             <?php include_once '../../includes/php/createNavbar.php'; ?>
 
             <!-- Header -->
-            <div class="p-5" style="background-image: url(https://console.kobyskreaties.nl/dashboard/images/products/banner2.png); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <?php
+            $bannerArray = array(
+                'subtitle' => 'Hieronder vind je een overzicht van alle Kleuren.',
+                'image' => 'https://console.kobyskreaties.nl/dashboard/images/products/banner2.png',
+                'breadcrumb' => array(
+                    array('title' => 'Dashboard', 'url' => 'dashboard/'),
+                    array('title' => 'Kleuren'),
+                ),
+                'notify_enabled' => false,
+                'notify_small_text' => '',
+                'notify_text' => ''
+            );
 
-                <nav class="flex items-center text-gray-400 text-sm my-3">
-                    <a href="<?= $main_url ?>dashboard/" class="hover:text-gray-300">Dashboard</a>
-                    <span class="mx-2 select-none">/</span>
-                    <a href="" class="text-white hover:text-gray-300">Kleuren</a>
-                </nav>
-
-                <h2 class="text-4xl font-medium text-white">Welkom terug, Jelte Cost 🙌✨</h2>
-                <p class="my-4 text-md text-gray-300 w-1/1 lg:w-1/2">
-                    Hieronder vind je een overzicht van alle Kleuren.
-                </p>
-            </div>
-
+            $bannerHTML = createBanner($bannerArray, $main_title, $main_url);
+            echo $bannerHTML;
+            ?>
             <!-- Content -->
             <div class="p-3 pt-6">
                 <h2 class="text-2xl font-medium textcolor-3">Kleuren</h2>
@@ -49,12 +51,10 @@
             <div class="grid grid-rows-3 grid-flow-col gap-4">
                 <div class="row-span-3 m-2">
                     <div class="py-3 px-3 bg-white shadow-md rounded-md card">
-                        <input type="text" class="block w-full p-2 text-sm text-gray-900 border rounded-lg" placeholder="Zoeken door alle kleuren..." id="searchInput">
-
+                        <?= createSearch("Zoeken naar kleuren") ?>
                         <table class="table-auto w-full" id="tableBody">
-                            <caption class="text-sm italic px-2 py-2">
-                                Aantal items: <span class="text-gray-500" id="itemCount"></span>
-                            </caption>
+                            <?= showItemsFilter() ?>
+
                             <!-- search bar -->
 
 
@@ -72,7 +72,7 @@
                                         <?php console_log($item) ?>
                                         <td><?= $item['id'] ?></td>
                                         <td><?= $item['title'] ?></td>
-                                        <td><a href="<?= $main_url ?>dashboard/deliverycosts/edit/?id=<?= $item['id'] ?>" class="text-blue-500 hover:text-blue-700">Bekijken</a></td>
+                                        <td><a href="<?= $main_url ?>dashboard/colors/edit/?id=<?= $item['id'] ?>" class="text-blue-500 hover:text-blue-700">Bewerken</a></td>
                                         </td>
                                     </tr>
                                 <?php } ?>

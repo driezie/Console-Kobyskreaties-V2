@@ -5,8 +5,8 @@ $orderid = $order[0]['id'];
 $customer = getCustomerFromorder($order[0]['customer_id'])[0];
 $products = getProductsFromOrder($orderId);
 
-console_log($order);
-console_log($customer);
+// console_log($order);
+// console_log($customer);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,24 +36,20 @@ console_log($customer);
             <?php include_once '../../../includes/php/createNavbar.php'; ?>
 
             <!-- Header -->
-            <div class="p-5" style="background-image: url(https://console.kobyskreaties.nl/dashboard/images/products/banner2.png); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-                <nav class="flex items-center text-gray-400 text-sm my-3">
-                    <a href="<?= $main_url ?>dashboard/" class="hover:text-gray-300">Dashboard</a>
-                    <span class="mx-2 select-none">/</span>
-                    <a href="<?= $main_url ?>dashboard/orders" class="hover:text-gray-300">Bestellingen</a>
-                    <span class="mx-2 select-none">/</span>
-                    <a href="" class="text-white hover:text-gray-300"><?= $orderId ?></a>
-                </nav>
-
-                <h2 class="text-4xl font-medium text-white">Welkom terug, Jelte Cost 🙌✨</h2>
-                <p class="my-4 text-md text-gray-300 w-1/1 lg:w-1/2">
-                    Hieronder vind je een overzicht van de bestellingen van <?= $orderId ?> gemaakt door
-                    <a href="<?= $main_url ?>dashboard/customers/customer?id=<?= $customer['id'] ?>" class="text-white hover:text-gray-300">
-                        <?= $customer['first_name'] ?> <?= $customer['last_name'] ?>.
-                    </a>
-                </p>
-            </div>
+            <?php
+            $bannerArray = array(
+                'subtitle' => 'U ben nu de bestelling aan het bekijken.',
+                'image' => 'https://console.kobyskreaties.nl/dashboard/images/products/banner2.png',
+                'breadcrumb' => array(
+                    array('title' => 'Dashboard', 'url' => 'dashboard'),
+                    array('title' => 'Bestellingen', 'url' => 'dashboard/orders'),
+                    array('title' => 'Bestelling #' . $orderId),
+                )
+            );
+                        
+            $bannerHTML = createBanner($bannerArray, $main_title, $main_url);
+            echo $bannerHTML;
+            ?>
 
             <!-- Content -->
             <div class="p-3 pt-6">
@@ -115,9 +111,7 @@ console_log($customer);
                                 <div class="col-span-3 m-2 bg-gray-100 p-3 rounded-md">
                                     <div class="flex justify-between py-1">
                                         <h2 class="text-xl font-medium textcolor-3">
-                                            <a href="https://www.kobyskreaties.nl/product/?id=<?= $product['id'] ?>" class="text-gray-500 hover:text-gray-400" target="_blank">
-                                                <?= $product['product_title'] ." - ". $product['product_color'] ?>
-                                            </a>
+                                            <?= $product['product_title'] . " - " . $product['product_color'] ?>
                                     </div>
                                     <div class="flex justify-between py-1">
                                         <p class="text-sm text-gray-500">Prijs: </p>
@@ -208,16 +202,27 @@ console_log($customer);
                         <div class="flex justify-between py-1 mx-2">
                             <div class="w-full h-0.5 bg-gray-300 my-2"></div>
                         </div>
+                        <form action="save.php?id=<?= $orderid ?>" method="post" id="statusForm">
+                            <div class="flex justify-between py-1 mx-2 items-center">
+                                <p class="text-sm text-gray-500">Status: </p>
+                                <p class="text-sm text-gray-500">
+                                    <select data-te-select-init class="p-2 form-select block w-full text-gray-500 border border-gray-300 rounded-md" name="status" id="status">
+                                        
+                                        <?php foreach ($statusses as $key => $status) : ?>
+                                            <option value="<?= $key ?>" <?= $key == $order[0]['status'] ? "selected" : "" ?>><?= $status ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </p>
+                            </div>
+                        </form>
 
-                        <div class="flex justify-between py-1 mx-2">
-                            <p class="text-sm text-gray-500">Status: </p>
-                            <p class="text-sm text-gray-500">
-                                <select data-te-select-init class="form-select block w-full text-gray-500 border border-gray-300 rounded-md" name="status" id="status">
-                                    <option value="1"><?= $order[0]['status'] ?></option>
-                                </select>
+                        <script>
+                            document.getElementById("status").addEventListener("change", function() {
+                                document.getElementById("statusForm").submit();
+                            });
+                        </script>
 
-                            </p>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -225,4 +230,5 @@ console_log($customer);
             <script src="<?= $main_url ?>includes/js/loadFontAwesome.js" type="text/javascript"></script>
             <script src="<?= $main_url ?>includes/js/main.js" type="text/javascript"></script>
     </body>
+
 </html>

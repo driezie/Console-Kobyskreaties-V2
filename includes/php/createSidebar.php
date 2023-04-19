@@ -31,16 +31,19 @@
         </div>
         <div class="bgcolor-2 rounded-md mt-2 hidden submenu" id="submenu1">
             <div class="text-left text-sm mt-2 mx-auto text-gray-200 font-medium">
-                <!-- First button -->
-                <a href="<?=$main_url?>dashboard/orders/new/">
+                <!-- <a href="<?=$main_url?>dashboard/orders/new.php">
                     <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 rounded-t-md mt-1 flex justify-between items-center">
                         Nieuwe Bestelling
                         <i class="animated-icon fa-solid fa-plus text-white"></i>
-
                     </h1>
-                </a>
-                <a href="<?=$main_url?>dashboard/orders/">
+                </a> -->
+                <!-- <a href="<?=$main_url?>dashboard/orders/">
                     <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1 rounded-b-md">
+                        Bestellingen
+                    </h1>
+                </a> -->
+                <a href="<?=$main_url?>dashboard/orders/">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1 rounded-md">
                         Bestellingen
                     </h1>
                 </a>
@@ -97,6 +100,34 @@
                 <a href="<?=$main_url?>dashboard/deliverycosts">
                     <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1 rounded-b-md">
                         Bezorgingskosten
+                    </h1>
+                </a>
+            </div>
+        </div>
+        <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer sidebar-button-hover text-white active dropdown" data-target="#submenu6">
+            <i class="animated-icon fa-solid fa-users"></i>
+            <div class="flex justify-between w-full items-center">
+                <span class="text-[16px] ml-4 text-gray-200 font-medium">Klanten</span>
+                <span class="text-sm rotate-180" id="arrow6">
+                    <i class="fa-solid fa-chevron-down rotate-180"></i>
+                </span>
+            </div>
+        </div>
+        <div class="bgcolor-2 rounded-md mt-2 hidden submenu" id="submenu6">
+            <div class="text-left text-sm mt-2 mx-auto text-gray-200 font-medium">
+                <!-- First button -->
+                <a href="<?=$main_url?>dashboard/customers/new.php">
+
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 rounded-t-md mt-1 flex justify-between items-center">
+                        Nieuwe klant
+                        <i class="animated-icon fa-solid fa-plus text-white"></i>
+
+                    </h1>
+                </a>
+
+                <a href="<?=$main_url?>dashboard/customers">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1 rounded-b-md">
+                        Klanten
                     </h1>
                 </a>
             </div>
@@ -172,7 +203,7 @@
         <a href="<?=$main_url?>dashboard/media" class="button">
             <div class="p-2.5 mt-5 flex items-center rounded-md px-4 duration-300 cursor-pointer sidebar-button-hover">
                 <i class="animated-icon fa-solid fa-images"></i>
-                <span class="text-[16px] ml-4 font-medium">Media</span>
+                <span class="text-[16px] ml-4 font-medium">Afbeelingen</span>
             </div>
         </a>
         <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer sidebar-button-hover text-white active dropdown" data-target="#submenu5">
