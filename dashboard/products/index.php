@@ -45,8 +45,15 @@
             ?>
 
             <!-- Content -->
-            <div class="p-3 pt-6">
-                <h2 class="text-2xl font-medium textcolor-3">Producten</h2>
+            <div class="p-3 pt-6 flex justify-between items-center">
+                <div class="flex items-left flex-col">
+                    <h2 class="text-2xl font-medium textcolor-3">
+                        Producten
+                    </h2>
+                </div>
+                <div class="flex">
+                    <a href="<?= $main_url ?>dashboard/products/new.php" class="btn btn-primary bgcolor-3 text-white hover:bgcolor-2 p-2 rounded-md"><i class="fa-solid fa-plus pr-2"></i></i>Nieuwe Product</a>
+                </div>
             </div>
 
             <div class="grid grid-rows-3 grid-flow-col gap-4">
@@ -72,13 +79,13 @@
                                         <a href="<?= $main_url ?>dashboard/products/product/?id=<?= $item['id'] ?>&view=1" class="text-blue-500 hover:text-blue-700"><?= $item['id'] ?></a></td>
                                         <!-- product_banner -->
                                         <td>
-                                            <img src="<?= $item['product_banner'] ?>" alt="" class="w-20 h-20 rounded-full">
+                                            <img src="<?=checkImage($item['product_banner'], $item['product_title']) ?>" alt="" class="w-20 h-20 rounded-full">
                                         </td>
                                         <td><?= $item['product_title'] ?></td>
                                         <td><?= $item['product_categorie'] ?></td>
                                         <td><?= $item['product_brand'] ?></td>
                                         <td>
-                                            <a href="<?= $main_url ?>dashboard/products/product/?id=<?= $item['id'] ?>&view=1" class="text-blue-500 hover:text-blue-700">Bekijken</a>
+                                            <a href="<?= $main_url ?>dashboard/products/product/edit/?id=<?= $item['id'] ?>&view=1" class="text-blue-500 hover:text-blue-700">Bewerken</a>
                                         </td>
                                     </tr>
                                 <?php } ?>

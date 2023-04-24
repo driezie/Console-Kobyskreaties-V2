@@ -71,11 +71,12 @@
                                 <?php foreach (getDeliveryCosts() as $item) { ?>
                                     <tr>
                                         <!-- ID: <?= $item['id'] ?> -->
-                                        <?php console_log($item) ?>
+                                        <?php //console_log($item) ?>
                                         <td class="border-b border-gray-200 px-2 py-2"><?= $item['id'] ?></td>
                                         <td class="border-b border-gray-200 px-2 py-2"><?= formatPrice($item['title']) ?></td>
                                         <td class="border-b border-gray-200 px-2 py-2"><?= $item['country'] ?></td>
-                                        <td><a href="<?= $main_url ?>dashboard/deliverycosts/edit/?id=<?= $item['id'] ?>" class="text-blue-500 hover:text-blue-700">Bekijken</a></td>
+                                        
+                                        <td><a href="<?= $main_url ?>dashboard/deliverycosts/edit/?id=<?= $item['id'] ?>" class="text-blue-500 hover:text-blue-700">Bewerken</a></td>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -90,5 +91,4 @@
             <script src="<?= $main_url ?>includes/js/main.js" type="text/javascript"></script>
             <script src="<?= $main_url ?>includes/js/searchInput.js" type="text/javascript"></script>
     </body>
-
 </html>

@@ -44,7 +44,7 @@
             ?>
 
             <!-- Content -->
-            <form action="<?= $main_url ?>dashboard/customers/save.php" method="post">
+            <form action="<?= $main_url ?>dashboard/deliverycosts/save.php" method="post">
                 <div class="p-3 pt-6 flex justify-between items-center">
                     <!-- under each other -->
                     <div class="flex items-left flex-col">
@@ -54,7 +54,7 @@
                         </h2>
                     </div>
                     <div class="flex">
-                        <?= createBackButton('Terug', $main_url . 'dashboard/products/') ?>
+                        <?= createBackButton('Terug', $main_url . 'dashboard/deliverycosts/') ?>
                         <?= createSaveFormButton('Opslaan')?>
                     </div>
 
@@ -69,7 +69,7 @@
                                     <div class="flex justify-between py-1">
                                         <h2 class="text-xl font-medium textcolor-3">Bezorgingskost</h2>
                                     </div>
-                                    <?= createInput('Bezorgingskosten', 'Bezorgingskosten', 'deliverycosts', 'Bezorgingskosten', true);?>
+                                    <?= createNumberInput('Bezorgingskosten', 'Bezorgingskosten', 'deliverycosts', true);?>
                                 </div>
                                 
                             </div>

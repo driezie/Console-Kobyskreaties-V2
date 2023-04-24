@@ -39,22 +39,10 @@ document.addEventListener("click", (event) => {
 });
 
 
-// jQuery for page scrolling feature - requires jQuery Easing plugin
 (function(jQuery) {
     setTimeout(function() {
-        // console.log('loaded');
-
         "use strict";
-
-        /*---------------------------------------------------------------------
-        Page Loader
-        -----------------------------------------------------------------------*/
         jQuery("#loading").fadeOut();
-
-
-        /*---------------------------------------------------------------------
-        Counter
-        -----------------------------------------------------------------------*/
         if (window.counterUp !== undefined) {
             const counterUp = window.counterUp["default"]
             const $counters = $(".counter");
@@ -63,21 +51,17 @@ document.addEventListener("click", (event) => {
                     element: $(this),
                     handler: function() {
                         counterUp(counter, {
-                            duration: 10000,
-                            delay: 2000 // updated delay to 2000 ms
+                            duration: 1, // 2000
+                            delay: 0 // 2000
                         });
                         this.destroy();
                         console.log('done loading');
                     },
                     offset: 'bottom-in-view'
-
-
                 });
             });
         }
-
-    }, 1);
-
+    }, 0); // 1
 })(jQuery);
 
 // Profile opener on right top

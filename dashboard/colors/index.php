@@ -44,8 +44,15 @@
             echo $bannerHTML;
             ?>
             <!-- Content -->
-            <div class="p-3 pt-6">
-                <h2 class="text-2xl font-medium textcolor-3">Kleuren</h2>
+            <div class="p-3 pt-6 flex justify-between items-center">
+                <div class="flex items-left flex-col">
+                    <h2 class="text-2xl font-medium textcolor-3">
+                        Kleuren
+                    </h2>
+                </div>
+                <div class="flex">
+                    <a href="<?= $main_url ?>dashboard/colors/new.php" class="btn btn-primary bgcolor-3 text-white hover:bgcolor-2 p-2 rounded-md"><i class="fa-solid fa-plus pr-2"></i></i>Nieuwe kleur</a>
+                </div>
             </div>
 
             <div class="grid grid-rows-3 grid-flow-col gap-4">

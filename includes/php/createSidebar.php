@@ -66,7 +66,7 @@
         <div class="bgcolor-2 rounded-md mt-2 hidden submenu" id="submenu2">
             <div class="text-left text-sm mt-2 mx-auto text-gray-200 font-medium">
                 <!-- First button -->
-                <a href="<?=$main_url?>dashboard/products/new">
+                <a href="<?=$main_url?>dashboard/products/new.php">
 
                     <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 rounded-t-md mt-1 flex justify-between items-center">
                         Nieuw Product
@@ -262,10 +262,44 @@
                 <span class="text-[16px] ml-4 font-medium">phpmyadmin</span>
             </div>
         </a>
-        <a href="<?=$main_url?>dashboard/logout" class="button">
-            <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer sidebar-button-hover text-white">
-                <i class="animated-icon fa-solid fa-right-from-bracket"></i>
-                <span class="text-[15px] ml-4 text-gray-200 font-medium">Uitloggen</span>
+
+        <div class="pl-2 text-left text-sm mt-2 mx-auto">
+            <h1 class="textcolor-2 text-[14px] select-none">
+                ACCOUNT
+            </h1>
+        </div>
+
+        <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer sidebar-button-hover text-white active dropdown" data-target="#submenu7">
+            <i class="animated-icon fa-solid fa-user"></i>
+            <div class="flex justify-between w-full items-center">
+                <span class="text-[16px] ml-4 text-gray-200 font-medium">Mijn Account</span>
+                <span class="text-sm rotate-180" id="arrow7">
+                    <i class="fa-solid fa-chevron-down rotate-180"></i>
+                </span>
             </div>
-        </a>
+        </div>
+        <div class="bgcolor-2 rounded-md mt-2 hidden submenu" id="submenu7">
+            <div class="text-left text-sm mt-2 mx-auto text-gray-200 font-medium">
+                <!-- First button -->
+                <a href="<?=$main_url?>dashboard/profile.php">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 rounded-t-md mt-1">
+                        Profiel
+                    </h1>
+                </a>
+                <!-- Button between (it has no round corners) -->
+                <a href="<?=$main_url?>dashboard/settings.php">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1">
+                        Settings
+                    </h1>
+                </a>
+
+                <!-- Last button -->
+                <a href="<?=$main_url?>dashboard/logout.php">
+                    <h1 class="px-3 py-3 cursor-pointer p-2 sidebar-button-hover-2 mt-1 rounded-b-md">
+                        Uitloggen
+                    </h1>
+                </a>
+            </div>
+        </div>
+       
     </div>

@@ -23,14 +23,14 @@
                     <div class="h-8 w-[.5px] bg-gray-300 m-2 rounded-lg"></div>
 
                     <button type="button" class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none" id="profile">
-                        <img class="w-8 h-8 rounded-full" src="https://jeltecost.nl/assets/img/jeltecost.png" alt="Profile">
+                        <img class="w-8 h-8 rounded-full" src="<?=$navbar_icon?>" alt="Profile">
                         <span class="ml-2 text-sm font-medium"><?=$navbar_account_name?></span>
                     </button>
 
                     <div class="absolute top-[60px] right-[5px] z-10 w-48 py-2 mt-8 bg-white rounded-md shadow-xl hidden" id="profile-popup">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Settings</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Logout</a>
+                        <a href="<?= $main_url ?>dashboard/profiel.php"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Profile</a>
+                        <a href="<?= $main_url ?>dashboard/settings.php"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Settings</a>
+                        <a href="<?= $main_url ?>dashboard/logout.php"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Logout</a>
                     </div>
                 </div>
             </div>

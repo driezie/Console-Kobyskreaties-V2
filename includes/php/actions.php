@@ -1,8 +1,25 @@
 <?php
 
 $main_url = "http://localhost/Console-Kobyskreaties-V2/";
-$main_title = "Welkom terug, Jelte Cost 🙌✨";
-$navbar_account_name = "Jelte Cost";
+session_start();
+function loginCheck() {
+    
+    if (!isset($_SESSION['user_id'])) {
+        // check if user isnt in the inlog page
+        if (basename($_SERVER['PHP_SELF']) != 'login.php') {
+            header('Location: /Console-Kobyskreaties-V2/login.php');
+        }
+    }
+
+    return true;
+}
+
+loginCheck();
+
+$main_title = "Welkom terug, ". $_SESSION['first_name'] . " " . $_SESSION['last_name'] . "✨!";
+$navbar_account_name = $_SESSION['first_name'] . " " . $_SESSION['last_name'];
+$navbar_icon = "https://ui-avatars.com/api/?name=" . substr($_SESSION['first_name'], 0, 1) . substr($_SESSION['last_name'], 0, 1) . "&color=fff&background=1c2b36";
+
 
 function getDB() {
     $host = "localhost";
@@ -25,9 +42,6 @@ $statusses = array(
     "7" => "Retour ontvangen",
 );
 
-
-
-// Main function
 
 // get function
 function getFromDB($what = "*", $table = "users", $where = "1", $limit = "", $order_by = ""){
@@ -157,9 +171,7 @@ function getOrdersFromCustomer($id) {
     return $orders;
 }
 
-
 // Product functions
-
 function getProducts() {
     // try 
     $db = getDB();
@@ -179,7 +191,6 @@ function getProducts() {
     return $product;
 }
 
-
 function getProductsAmount() {
     $db = getDB();
     $sql = "SELECT * FROM products";
@@ -195,9 +206,14 @@ function getProduct($id) {
     PG.id AS "id",
     PG.title AS "product_title",
     br.title AS "product_brand",
+    br.id AS "product_brand_id",
     ca.title as "product_categorie",
+    ca.id as "product_categorie_id",
     PG.banner AS "product_banner",
-    PG.created_at AS "created_at"
+    PG.description AS "product_description",
+    PG.created_at AS "created_at",
+    -- delivery_costs
+    PG.delivery_costs AS "delivery_cost"
     FROM product_groups PG
         LEFT JOIN brands br ON PG.brand = br.id
         LEFT JOIN categories ca ON PG.category = ca.id WHERE PG.id = :id';
@@ -208,10 +224,56 @@ function getProduct($id) {
     return $product;
 }
 
+function getProductsFromCategory($id) {
+    $products = getFromDB("*", "products", "category_id = $id");
+    return $products;
+}
+
+function getProductsFromBrand($id) {
+    $products = getFromDB("*", "products", "brand_id = $id");
+    return $products;
+}
+
+function getProductsFromColor($id) {
+    $products = getFromDB("*", "products", "color = $id");
+    return $products;
+}
+
+function getProductsFromSubcategory($id) {
+    $products = getFromDB("*", "products", "subcategory_id = $id");
+    return $products;
+}
+
+function getProductsByDeliveryCost($id) {
+    $products = getFromDB("*", "product_groups", "delivery_costs = $id");
+    return $products;
+}
+
+// Product group functions
+function getProductGroups() {
+    $product_groups = getFromDB("*", "product_groups", "1");
+    return $product_groups;
+}
+
+function getProductGroup($id) {
+    $product_group = getFromDB("*", "product_groups", "id = $id");
+    return $product_group;
+}
+
+function getColorProducts($product_group, $color) {
+    $products = getFromDB("*", "products", "product_group = $product_group AND color = $color");
+    return $products;
+}
+
 // Delivery costs
 function getDeliveryCosts() {
     $delivery_costs = getFromDB("*", "delivery_costs", "1");
-    return $delivery_costs;
+    return $delivery_costs; 
+}
+
+function getDeliveryCost($id) {
+    $delivery_costs = getFromDB("*", "delivery_costs", "id = $id");
+    return $delivery_costs; 
 }
 
 // Colors
@@ -220,16 +282,48 @@ function getColors() {
     return $colors;
 }
 
+function getColor($id) {
+    $color = getFromDB("*", "colors", "id = $id");
+    return $color;
+}
+
+function getColorsFromGroup($product_group) {
+    // select from products where product_group = $id and color = $color
+    $color = getFromDB("*", "products", "product_group = $product_group");
+    return $color;
+}
+
 // Categories
 function getCategories() {
     $categories = getFromDB("*", "categories", "1");
     return $categories;
 }
 
+function getCategory($id) {
+    $category = getFromDB("*", "categories", "id = $id");
+    return $category[0]['title'];
+}
+
+function getCategoryId($product_group) {
+    $category = getFromDB("*", "product_groups", "id = $product_group");
+    return $category;
+}
+
 // brands
 function getbrands() {
     $subcategories = getFromDB("*", "brands", "1");
     return $subcategories;
+}
+
+function getBrand($id)
+{
+    $brand = getFromDB("*", "brands", "id = $id");
+    return $brand[0]['title'];
+}
+
+function getBrandsByCategory($id) {
+    $brands = getFromDB("*", "brands", "category_id = $id");
+    return $brands;
 }
 
 // stock 
@@ -250,7 +344,6 @@ function getSizes() {
 }
 
 // Extra functions
-
 function getColorTitle($id) {
     $colors = getColors();
     foreach ($colors as $color) {
@@ -260,7 +353,6 @@ function getColorTitle($id) {
     }
 }
 
-// get size title
 function getSizeTitle($id) {
     $sizes = getSizes();
     foreach ($sizes as $size) {
@@ -288,7 +380,6 @@ function getTotalPrice() {
         echo 'Database gegevens ophalen error: ' . $e->getMessage();
     }
 }
-
 
 function convertDate($date) {
     $date = date("d F Y", strtotime($date));
@@ -330,6 +421,7 @@ function formatPrice($price) {
     $price = number_format($price, 2, ',', '.');
     return $price;
 }
+
 function convertStatus($status, $array) {
     if (isset($array[$status])) { // Check if the status code exists in the array
         return $array[$status]; // Return the corresponding description
@@ -353,7 +445,6 @@ function showItemsFilter(){
     Aantal items: <span class="text-gray-500" id="itemCount"></span>
     </caption>';
 }
-
 
 function createBanner($array, $main_title, $main_url) {
     $title = $main_title;
@@ -402,7 +493,6 @@ function createFormTitle($title){
     echo '</div>';
 }
 
-
 function createInput($label, $placeholder, $name, $type, $ifrequired, $value = ''){
     echo '<div class="flex justify-between pt-2 flex-col">';
     if (!empty($label)) {
@@ -421,6 +511,87 @@ function createInput($label, $placeholder, $name, $type, $ifrequired, $value = '
     echo '</div>';
 }
 
+function createNumberInput($label, $placeholder, $name, $ifrequired, $value = ''){
+    echo '<div class="flex justify-between pt-2 flex-col">';
+    if (!empty($label)) {
+        echo '<p class="text-sm text-gray-500 pb-1">' . $label . ': </p>';
+    }
+    echo '</div>';
+    echo '<div class="flex justify-between py-1 flex-col">';
+    echo '<input type="number" step="0.01" name="' . $name . '" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" placeholder="' . $placeholder . '"';
+    if (!empty($value)) {
+        echo ' value="' . $value . '"';
+    }
+    if ($ifrequired) {
+        echo ' required';
+    }
+    echo '>';
+    echo '</div>';
+}
+
+function createInputArea($label, $placeholder, $name, $type, $ifrequired, $value = ''){
+    // add minimum height to textarea
+    echo '<div class="flex justify-between pt-2 flex-col">';
+    if (!empty($label)) {
+        echo '<p class="text-sm text-gray-500 pb-1">' . $label . ': </p>';
+    }
+    echo '</div>';
+    echo '<div class="flex justify-between py-1 flex-col">';
+    echo '<textarea rows="4" name="' . $name . '" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" placeholder="' . $placeholder . '"';
+    if($ifrequired) {
+        echo ' required';
+    }
+    echo '>';
+    if (!empty($value)) {
+        echo $value;
+    }
+    echo '</textarea>';
+    echo '</div>';
+}
+
+function createSelectInput($label, $placeholder, $name, $ifrequired, $value = '', $options = array(), $default = '', $values = array()){
+    echo '<div class="flex justify-between pt-2 flex-col">';
+    if (!empty($label)) {
+        echo '<p class="text-sm text-gray-500 pb-1">' . $label . ': </p>';
+    }
+    echo '</div>';
+    echo '<div class="flex justify-between py-1 flex-col">';
+    echo '<select name="' . $name . '" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"';
+    if($ifrequired) {
+        echo ' required';
+    }
+    echo '>';
+    if (!empty($default)) {
+        echo '<option value="" disabled';
+        if ($value == '') {
+            echo ' selected';
+        }
+        echo '>' . $default . '</option>';
+    }
+    // for every option & value
+    foreach ($options as $key => $option) {
+        echo '<option value="' . $values[$key] . '"';
+        if ($value == $values[$key]) { // check if current value matches the provided $value
+            echo ' selected';
+        }
+        echo '>' . $option . '</option>';
+    }
+    echo '</select>';
+    echo '</div>';
+}
+
+
+
+
+function checkImage($src, $product_name){
+    // if empty show the 2 first letters of the product name if there is one one letter show the first letter using https://ui-avatars.com/api/?name=JC&color=fff&background=1c2b36
+    if (empty($src)) {
+        $src = 'https://ui-avatars.com/api/?name=' . substr($product_name, 0, 2) . '&color=111827&background=F9FAFB';
+    }
+    return $src;
+    
+}
+
 function createSaveFormButton($title){
     echo '<button type="submit" name="submit" class="btn btn-primary text-white p-2 rounded-md bg-green-600 hover:bg-green-700"><i class="fa-solid fa-floppy-disk pr-2"></i>'.$title.'</button>';
 
@@ -429,10 +600,6 @@ function createSaveFormButton($title){
 function createBackButton($title, $href){
     return '<a href="'.$href.'" class="btn btn-primary textcolor-3 hover:bgcolor-3 p-2 rounded-md mr-2 border border-gray-500"><i class="fa-solid fa-arrow-left pr-2"></i>'.$title.'</a>';
 }
-
-
-
-
 
 // console dbh connection
 $dbh = getDB();
